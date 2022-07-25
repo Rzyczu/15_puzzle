@@ -7,162 +7,176 @@ var rekordy;
 var nick;
 var posInitial
 
-//dynamiczne tworzenie elementóe slidera
-var dSlider = document.createElement('div');
-dSlider.id = "slider";
-dSlider.classList.add("slider");
 
-var dWrapper = document.createElement('div');
-dWrapper.classList.add("wrapper");
 
-var dSlides = document.createElement('div');
-dSlides.id = "slides";
-dSlides.classList.add("slides");
+// //dynamiczne tworzenie elementóe slidera
+// var dSlider = document.createElement('div');
+// dSlider.id = "slider";
+// dSlider.classList.add("slider");
 
-for (let i = 0; i < 3; i++) {
-    var dImg = document.createElement('span');
-    dImg.classList.add("slide");
-    dImg.classList.add("s" + i);
+// var dWrapper = document.createElement('div');
+// dWrapper.classList.add("wrapper");
 
-    dSlides.appendChild(dImg);
-}
-var aControlP = document.createElement('a');
-aControlP.id = "prev";
-aControlP.classList.add("control");
-aControlP.classList.add("prev");
+// var dSlides = document.createElement('div');
+// dSlides.id = "slides";
+// dSlides.classList.add("slides");
 
-var aControlN = document.createElement('a');
-aControlN.id = "next";
-aControlN.classList.add("control");
-aControlN.classList.add("next");
+// for (let i = 0; i < 3; i++) {
+//     var dImg = document.createElement('span');
+//     dImg.classList.add("slide");
+//     dImg.classList.add("s" + i);
 
-dSlider.appendChild(dWrapper);
-dWrapper.appendChild(dSlides);
-dSlider.appendChild(aControlP);
-dSlider.appendChild(aControlN);
-document.body.appendChild(dSlider)
+//     dSlides.appendChild(dImg);
+// }
+// var aControlP = document.createElement('a');
+// aControlP.id = "prev";
+// aControlP.classList.add("control");
+// aControlP.classList.add("prev");
 
-var slider = document.getElementById('slider'),
-    sliderItems = document.getElementById('slides'),
-    prev = document.getElementById('prev'),
-    next = document.getElementById('next');
+// var aControlN = document.createElement('a');
+// aControlN.id = "next";
+// aControlN.classList.add("control");
+// aControlN.classList.add("next");
 
-var slider = document.getElementById('slider'),
-    sliderItems = document.getElementById('slides'),
-    prev = document.getElementById('prev'),
-    next = document.getElementById('next');
+// dSlider.appendChild(dWrapper);
+// dWrapper.appendChild(dSlides);
+// dSlider.appendChild(aControlP);
+// dSlider.appendChild(aControlN);
+// document.body.appendChild(dSlider)
 
-function Slider(wrapper, items, prev, next) {
-    var posX1 = 0,
-        posX2 = 0,
-        posFinal,
-        threshold = 100,
-        slides = items.getElementsByClassName('slide'),
-        slidesLength = slides.length,
-        slideSize = items.getElementsByClassName('slide')[0].offsetWidth,
-        firstSlide = slides[0],
-        lastSlide = slides[slidesLength - 1],
-        cloneFirst = firstSlide.cloneNode(true),
-        cloneLast = lastSlide.cloneNode(true),
-        index = 0,
-        allowShift = true;
+// var slider = document.getElementById('slider'),
+//     sliderItems = document.getElementById('slides'),
+//     prev = document.getElementById('prev'),
+//     next = document.getElementById('next');
 
-    // Clone first and last slide
-    items.appendChild(cloneFirst);
-    items.insertBefore(cloneLast, firstSlide);
-    wrapper.classList.add('loaded');
+// var slider = document.getElementById('slider'),
+//     sliderItems = document.getElementById('slides'),
+//     prev = document.getElementById('prev'),
+//     next = document.getElementById('next');
 
-    // Mouse events
-    items.onmousedown = dragStart;
+// function Slider(wrapper, items, prev, next) {
+//     var posX1 = 0,
+//         posX2 = 0,
+//         posFinal,
+//         threshold = 100,
+//         slides = items.getElementsByClassName('slide'),
+//         slidesLength = slides.length,
+//         slideSize = items.getElementsByClassName('slide')[0].offsetWidth,
+//         firstSlide = slides[0],
+//         lastSlide = slides[slidesLength - 1],
+//         cloneFirst = firstSlide.cloneNode(true),
+//         cloneLast = lastSlide.cloneNode(true),
+//         index = 0,
+//         allowShift = true;
 
-    // Touch events
-    items.addEventListener('touchstart', dragStart);
-    items.addEventListener('touchend', dragEnd);
-    items.addEventListener('touchmove', dragAction);
+//     // Clone first and last slide
+//     items.appendChild(cloneFirst);
+//     items.insertBefore(cloneLast, firstSlide);
+//     wrapper.classList.add('loaded');
 
-    // Click events
-    prev.addEventListener('click', function () { shiftSlide(-1) });
-    next.addEventListener('click', function () { shiftSlide(1) });
+//     // Mouse events
+//     items.onmousedown = dragStart;
 
-    // Transition events
-    items.addEventListener('transitionend', checkIndex);
+//     // Touch events
+//     items.addEventListener('touchstart', dragStart);
+//     items.addEventListener('touchend', dragEnd);
+//     items.addEventListener('touchmove', dragAction);
 
-    function dragStart(e) {
-        e = e || window.event;
-        e.preventDefault();
-        posInitial = items.offsetLeft;
+//     // Click events
+//     prev.addEventListener('click', function () { shiftSlide(-1) });
+//     next.addEventListener('click', function () { shiftSlide(1) });
 
-        if (e.type == 'touchstart') {
-            posX1 = e.touches[0].clientX;
-        } else {
-            posX1 = e.clientX;
-            document.onmouseup = dragEnd;
-            document.onmousemove = dragAction;
-        }
-    }
+//     // Transition events
+//     items.addEventListener('transitionend', checkIndex);
 
-    function dragAction(e) {
-        e = e || window.event;
+//     function dragStart(e) {
+//         e = e || window.event;
+//         e.preventDefault();
+//         posInitial = items.offsetLeft;
 
-        if (e.type == 'touchmove') {
-            posX2 = posX1 - e.touches[0].clientX;
-            posX1 = e.touches[0].clientX;
-        } else {
-            posX2 = posX1 - e.clientX;
-            posX1 = e.clientX;
-        }
-        items.style.left = (items.offsetLeft - posX2) + "px";
-    }
+//         if (e.type == 'touchstart') {
+//             posX1 = e.touches[0].clientX;
+//         } else {
+//             posX1 = e.clientX;
+//             document.onmouseup = dragEnd;
+//             document.onmousemove = dragAction;
+//         }
+//     }
 
-    function dragEnd(e) {
-        posFinal = items.offsetLeft;
-        if (posFinal - posInitial < -threshold) {
-            shiftSlide(1, 'drag');
-        } else if (posFinal - posInitial > threshold) {
-            shiftSlide(-1, 'drag');
-        } else {
-            items.style.left = (posInitial) + "px";
-        }
+//     function dragAction(e) {
+//         e = e || window.event;
 
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
+//         if (e.type == 'touchmove') {
+//             posX2 = posX1 - e.touches[0].clientX;
+//             posX1 = e.touches[0].clientX;
+//         } else {
+//             posX2 = posX1 - e.clientX;
+//             posX1 = e.clientX;
+//         }
+//         items.style.left = (items.offsetLeft - posX2) + "px";
+//     }
 
-    function shiftSlide(dir, action) {
-        items.classList.add('shifting');
+//     function dragEnd(e) {
+//         posFinal = items.offsetLeft;
+//         if (posFinal - posInitial < -threshold) {
+//             shiftSlide(1, 'drag');
+//         } else if (posFinal - posInitial > threshold) {
+//             shiftSlide(-1, 'drag');
+//         } else {
+//             items.style.left = (posInitial) + "px";
+//         }
 
-        if (allowShift) {
-            if (!action) { posInitial = items.offsetLeft; }
+//         document.onmouseup = null;
+//         document.onmousemove = null;
+//     }
 
-            if (dir == 1) {
-                items.style.left = (posInitial - slideSize) + "px";
-                index++;
-            } else if (dir == -1) {
-                items.style.left = (posInitial + slideSize) + "px";
-                index--;
-            }
-        };
+//     function shiftSlide(dir, action) {
+//         items.classList.add('shifting');
 
-        allowShift = false;
-    }
+//         if (allowShift) {
+//             if (!action) { posInitial = items.offsetLeft; }
 
-    function checkIndex() {
-        items.classList.remove('shifting');
+//             if (dir == 1) {
+//                 items.style.left = (posInitial - slideSize) + "px";
+//                 index++;
+//             } else if (dir == -1) {
+//                 items.style.left = (posInitial + slideSize) + "px";
+//                 index--;
+//             }
+//         };
 
-        if (index == -1) {
-            items.style.left = -(slidesLength * slideSize) + "px";
-            index = slidesLength - 1;
-        }
+//         allowShift = false;
+//     }
 
-        if (index == slidesLength) {
-            items.style.left = -(1 * slideSize) + "px";
-            index = 0;
-        }
+//     function checkIndex() {
+//         items.classList.remove('shifting');
 
-        allowShift = true;
-    }
-}
-Slider(slider, sliderItems, prev, next);
+//         if (index == -1) {
+//             items.style.left = -(slidesLength * slideSize) + "px";
+//             index = slidesLength - 1;
+//         }
+
+//         if (index == slidesLength) {
+//             items.style.left = -(1 * slideSize) + "px";
+//             index = 0;
+//         }
+
+//         allowShift = true;
+//     }
+// }
+// Slider(slider, sliderItems, prev, next);
+
+var imgDiv = document.createElement('img');
+imgDiv.src = './img/img1.png'
+imgDiv.style.width = '250px'
+imgDiv.style.height = '250px'
+imgDiv.style.position = "absolute"
+imgDiv.style.left = "380px"
+
+// imgDiv.style.backgroundPositionX = piece[j + size * i].shiftX
+// imgDiv.style.backgroundPositionY = piece[j + size * i].shiftY
+document.body.appendChild(imgDiv);
+
 
 //dynamicznie tworzenie przycisków
 var d = document.createElement('div');
@@ -183,18 +197,20 @@ document.body.appendChild(d);
 
 // funkcja po klikneciu w przycisk - tworzenie planszy i cała rozgrywka
 function startGame() {
-    if (posInitial == -200) {
-        imgNumb = 2
-    } else if (posInitial == -400) {
-        imgNumb = 1
+    // if (posInitial == -200) {
+    //     imgNumb = 2
+    // } else if (posInitial == -400) {
+    //     imgNumb = 1
 
-    } else if (posInitial == -600) {
-        imgNumb = 2
+    // } else if (posInitial == -600) {
+    //     imgNumb = 2
 
-    } else if (posInitial == -800) {
-        console.log("Mały bug")
-        imgNumb = 2
-    }
+    // } else if (posInitial == -800) {
+    //     console.log("Mały bug")
+    //     imgNumb = 2
+    // }
+    imgNumb = 1
+
     var oldBoard = document.querySelector("#gameBoard");  //usuwanie poprzedniej planszy i zatrzymanie interwału czasu
     while (document.querySelector('#gameBoard') != null) {
         oldBoard.remove()
@@ -390,7 +406,7 @@ function clearTime() {
     start = Date.now();
 }
 function win() {
-    console.log("huj")
+    // console.log("huj")
     clearInterval(timeInterval)
     setTimeout(function () {
         nick = prompt("Wygrales z czasem: " + time + "\nPodaj swój nick : ")
@@ -399,7 +415,7 @@ function win() {
             var d = new Date();
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
             var expires = "expires=" + d.toGMTString();
-            document.cookie = cname + "=" + nick + ";" + expires + ";path=/";
+            document.cookie = cnick + "=" + nick + ";" + expires + ";path=/";
             console.log(document.cookie)
         }
 
